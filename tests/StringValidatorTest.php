@@ -189,11 +189,13 @@ final class StringValidatorTest extends TestCase
         $frase->clearValidationErrors()->notContains("Peão", "Caneca", "Teclado");
         $this->assertSame(false, $validator->validate(false)->hasErrors());
         $validator->clear();
-        
-        
-        
-        
-        //$idade->clearValidationErrors()->notIn(10, 15, 30);
-        //$this->assertSame(true, $validator->validate(false)->hasErrors());
+    }
+    
+    public function testOptionalFields()
+    {
+        $validator = $this->mock();
+        $cor = $validator->addString('cor', "A cor", '')->required(false)->equal("azul");
+        $this->assertSame(false, $validator->validate(false)->hasErrors());
+        $validator->clear();
     }
 }

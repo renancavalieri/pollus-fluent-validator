@@ -488,17 +488,18 @@ class StringRule extends BaseRule
      * @param bool $status
      * @return $this
      */
-    public function required(bool $status = true)
+    protected function nullableCheck()
     {
-        $this->required = $status;
-        if ($this->nullableCheck())
+        if ( ($this->value === null || $this->value === "" ) && $this->required === false )
         {
-            if (trim($this->value) === "")
-            {
-                $this->raiseError(self::NULL_ERROR, $this->context);
-            }
+            return false;
         }
-        return $this;
+        else if (($this->value === null || $this->value === "" ) && $this->required === true)
+        {
+            $this->raiseError(self::NULL_ERROR);
+        }
+        
+        return true;
     }
 }
 
