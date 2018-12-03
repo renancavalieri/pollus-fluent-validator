@@ -66,10 +66,13 @@ class BrazilianPortuguese extends BaseTranslator implements TranslatorInterface
         EX_STR::PATTERN_ERROR          => "{{field}} deve corresponder ao padrão {{pattern}}",
         EX_STR::PHONE_NUMBER_ERROR     => "{{field}} deve ser um número de telefone fixo (com área)",
         EX_STR::URL_ERROR              => "{{field}} deve ser uma URL",
+        EX_STR::AT_LEAST_ONE_LOWERCASE_ERROR => "{{field}} deve conter ao menos uma letra minúscula",
+        EX_STR::AT_LEAST_ONE_UPPERCASE_ERROR => "{{field}} deve conter ao menos uma letra maiúscula",
+        EX_STR::AT_LEAST_ONE_NUMBER_ERROR => "{{field}} deve conter ao menos um número",
         
         /**
          * Traduções de validação para todos os tipos
          */
-        EX_BASE::NULL_ERROR             => "{{field}} não pode ser nulo",
+        EX_BASE::NULL_ERROR             => "{{field}} não pode ficar em branco",
     ];
 }

@@ -8,7 +8,8 @@
 
 namespace Pollus\Validator\Rules;
 
-use Pollus\Validator\Translator\TranslatorInterface;
+use Pollus\Validator\Validator;
+use Pollus\Validator\Models\Error;
 
 /**
  * Abstração das regras de validação
@@ -65,17 +66,24 @@ abstract class BaseRule
      * @var array
      */
     protected $custom_messages = [];
+
+    /**
+     * @var Validator
+     */
+    protected $validator;
     
     /**
-     * @var int
+     * @var string
      */
-    protected $num_rules = 0;
+    protected $input;
     
-    public function __construct(string $field, $value)
+    public function __construct(string $input, string $field, $value, Validator $validator)
     {
+        $this->input = $input;
         $this->field = $field;
         $this->value = $value;
         $this->context = ["field" => $field];
+        $this->validator = $validator;
     }
 
     /**
@@ -146,7 +154,8 @@ abstract class BaseRule
      */
     protected function raiseError(int $code, array $context = [])
     {
-        $this->errors[$code] = array_merge($this->context, $context);
+        $message = $this->validator->translate($code, array_merge($this->context, $context), $this->custom_messages[$code] ?? null);
+        $this->validator->addError($this->input, new Error($code, $message));
     }
     
     /**
@@ -165,14 +174,13 @@ abstract class BaseRule
         
         return true;
     }
-    
+        
     /**
-     * Remove os erros de validação deste objeto
-     * @return this
+     * Retorna a classe de validação
+     * @return Validator
      */
-    public function clearValidationErrors()
+    public function getValidator() : Validator
     {
-        $this->errors = [];
-        return $this;
+        return $this->validator;
     }
 }

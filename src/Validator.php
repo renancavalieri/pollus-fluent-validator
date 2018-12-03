@@ -26,6 +26,11 @@ class Validator
     protected $translator;
     
     /**
+     * @var ErrorCollection
+     */
+    protected $collection;
+    
+    /**
      * Contém os campos e as regras de validação
      * 
      * input_name => regra de validação
@@ -37,9 +42,19 @@ class Validator
     /**
      * @param TranslatorInterface $translator
      */
-    public function __construct(TranslatorInterface $translator) 
+    public function __construct(TranslatorInterface $translator, ?ErrorCollection $error = null) 
     {
         $this->translator = $translator;
+        
+        if ($error === null)
+        {
+            $this->collection = new ErrorCollection();
+        }
+        else
+        {
+            $this->collection = $error;
+        }
+        
     }
 
     /**
@@ -48,10 +63,9 @@ class Validator
      * @param string|null $value
      * @return StringRule
      */
-    public function addString(string $input_name, string $field, ?string $value) : StringRule
+    public function newString(string $input_name, string $field, ?string $value) : StringRule
     {
-        $this->inputs[$input_name] = new StringRule($field, $value);
-        return $this->inputs[$input_name];
+        return new StringRule($input_name, $field, $value, $this);
     }
     
     /**
@@ -60,10 +74,9 @@ class Validator
      * @param int|null $value
      * @return IntegerRule
      */
-    public function addInteger(string $input_name, string $field, ?int $value) : IntegerRule
+    public function newInteger(string $input_name, string $field, ?int $value) : IntegerRule
     {
-        $this->inputs[$input_name] = new IntegerRule($field, $value);
-        return $this->inputs[$input_name];
+        return new IntegerRule($input_name, $field, $value, $this);
     }
     
     
@@ -73,39 +86,49 @@ class Validator
      * @throws ValidationException
      */
     public function validate(bool $raise_exception = true) : ErrorCollection
+    {       
+        if ($this->collection->hasErrors() === true && $raise_exception === true)
+        {
+            throw new ValidationException($this->collection);
+        }
+        
+        return $this->collection;
+    }
+    
+    /**
+     * Traduz uma mensagem de erro
+     * 
+     * @param int $error_code
+     * @param array $context
+     * @param string|null $custom_message
+     * @return string
+     */
+    public function translate(int $error_code, array $context = [], ?string $custom_message = null) : string
     {
-        $collection = new ErrorCollection();
-        
-        foreach($this->inputs as $input_name => $object)
-        {
-            if ($object->hasErrors() === true)
-            {
-                $errors = $object->getErrors();
-                
-                foreach($errors as $error_code => $context)
-                {
-                    $message = $this->translator->getMessage($error_code, $context, 
-                            ($object->messages[$error_code]) ?? null);
-                    
-                    $collection->add($input_name, new Error($error_code, $message));   
-                }
-            }
-        }
-        
-        if ($collection->hasErrors() === true && $raise_exception === true)
-        {
-            throw new ValidationException($collection);
-        }
-        
-        return $collection;
+        return $this->translator->getMessage($error_code, $context, $custom_message);
+    }
+    
+    /**
+     * Adiciona um novo erro
+     * 
+     * @param string $input_name
+     * @param Error $error
+     * 
+     * @return Validator
+     */
+    public function addError(string $input_name, Error $error) : Validator
+    {
+        $this->collection->add($input_name, $error);   
+        return $this;
     }
     
     /**
      * Limpa todas as regras de validação
      * @return $this
      */
-    public function clear() : self
+    public function clear() : Validator
     {
+        $this->collection = new ErrorCollection();
         $this->inputs = [];
         return $this;
     }

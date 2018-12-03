@@ -18,117 +18,152 @@ final class IntValidatorTest extends TestCase
     {
         $validator = $this->mock();
  
-        $idade = $validator->addInteger('idade', "A idade", 15)->between(10, 20);
+        $idade = $validator->newInteger('idade', "A idade", 15)->between(10, 20);
         $this->assertSame(false, $validator->validate(false)->hasErrors());
+        $validator->clear();
         
-        $idade->clearValidationErrors()->between(5, 10);
+        $idade->between(5, 10);
         $this->assertSame(true, $validator->validate(false)->hasErrors());
+        $validator->clear();
         
-        $idade->clearValidationErrors()->between(5, -40);
+        $idade->between(5, -40);
         $this->assertSame(true, $validator->validate(false)->hasErrors());
+        $validator->clear();
         
-        $idade->clearValidationErrors()->equal(15);
+        $idade->equal(15);
         $this->assertSame(false, $validator->validate(false)->hasErrors());
+        $validator->clear();
         
-        $idade->clearValidationErrors()->equal(16);
+        $idade->equal(16);
         $this->assertSame(true, $validator->validate(false)->hasErrors());
+        $validator->clear();
         
-        $idade->clearValidationErrors()->even();
+        $idade->even();
         $this->assertSame(true, $validator->validate(false)->hasErrors());
+        $validator->clear();
         
-        $idade->clearValidationErrors()->odd();
+        $idade->odd();
         $this->assertSame(false, $validator->validate(false)->hasErrors());
+        $validator->clear();
         
-        $idade->clearValidationErrors()->higher(10);
+        $idade->higher(10);
         $this->assertSame(false, $validator->validate(false)->hasErrors());
+        $validator->clear();
         
-        $idade->clearValidationErrors()->higher(20);
+        $idade->higher(20);
         $this->assertSame(true, $validator->validate(false)->hasErrors());
+        $validator->clear();
         
-        $idade->clearValidationErrors()->higher(15);
+        $idade->higher(15);
         $this->assertSame(true, $validator->validate(false)->hasErrors());
+        $validator->clear();
         
-        $idade->clearValidationErrors()->higherEqual(15);
+        $idade->higherEqual(15);
         $this->assertSame(false, $validator->validate(false)->hasErrors());
+        $validator->clear();
         
-        $idade->clearValidationErrors()->higherEqual(14);
+        $idade->higherEqual(14);
         $this->assertSame(false, $validator->validate(false)->hasErrors());
+        $validator->clear();
         
-        $idade->clearValidationErrors()->higherEqual(16);
+        $idade->higherEqual(16);
         $this->assertSame(true, $validator->validate(false)->hasErrors());
+        $validator->clear();
         
-        $idade->clearValidationErrors()->in(10, 20, 30);
+        $idade->in(10, 20, 30);
         $this->assertSame(true, $validator->validate(false)->hasErrors());
+        $validator->clear();
         
-        $idade->clearValidationErrors()->in(7, 9, 8 ,5, 15);
+        $idade->in(7, 9, 8 ,5, 15);
         $this->assertSame(false, $validator->validate(false)->hasErrors());
+        $validator->clear();
         
-        $idade->clearValidationErrors()->in();
+        $idade->in();
         $this->assertSame(true, $validator->validate(false)->hasErrors());
+        $validator->clear();
         
-        $idade->clearValidationErrors()->lower(15);
+        $idade->lower(15);
         $this->assertSame(true, $validator->validate(false)->hasErrors());
+        $validator->clear();
         
-        $idade->clearValidationErrors()->lower(16);
+        $idade->lower(16);
         $this->assertSame(false, $validator->validate(false)->hasErrors());
+        $validator->clear();
         
-        $idade->clearValidationErrors()->lower(14);
+        $idade->lower(14);
         $this->assertSame(true, $validator->validate(false)->hasErrors());
+        $validator->clear();
         
-        $idade->clearValidationErrors()->lowerEqual(15);
+        $idade->lowerEqual(15);
         $this->assertSame(false, $validator->validate(false)->hasErrors());
+        $validator->clear();
         
-        $idade->clearValidationErrors()->lowerEqual(16);
+        $idade->lowerEqual(16);
         $this->assertSame(false, $validator->validate(false)->hasErrors());
+        $validator->clear();
         
-        $idade->clearValidationErrors()->lowerEqual(14);
+        $idade->lowerEqual(14);
         $this->assertSame(true, $validator->validate(false)->hasErrors());
+        $validator->clear();
         
-        $idade->clearValidationErrors()->max(10);
+        $idade->max(10);
         $this->assertSame(true, $validator->validate(false)->hasErrors());
+        $validator->clear();
         
-        $idade->clearValidationErrors()->max(20);
+        $idade->max(20);
         $this->assertSame(false, $validator->validate(false)->hasErrors());
+        $validator->clear();
         
-        $idade->clearValidationErrors()->min(20);
+        $idade->min(20);
         $this->assertSame(true, $validator->validate(false)->hasErrors());
+        $validator->clear();
         
-        $idade->clearValidationErrors()->min(10);
+        $idade->min(10);
         $this->assertSame(false, $validator->validate(false)->hasErrors());
+        $validator->clear();
         
-        $idade->clearValidationErrors()->negative();
+        $idade->negative();
         $this->assertSame(true, $validator->validate(false)->hasErrors());
+        $validator->clear();
         
-        $idade->clearValidationErrors()->positive();
+        $idade->positive();
         $this->assertSame(false, $validator->validate(false)->hasErrors());
+        $validator->clear();
         
-        $idade->clearValidationErrors()->notBetween(10, 20);
+        $idade->notBetween(10, 20);
         $this->assertSame(true, $validator->validate(false)->hasErrors());
+        $validator->clear();
         
-        $idade->clearValidationErrors()->notBetween(16, 20);
+        $idade->notBetween(16, 20);
         $this->assertSame(false, $validator->validate(false)->hasErrors());
+        $validator->clear();
         
-        $idade->clearValidationErrors()->notBetween(15, 20);
+        $idade->notBetween(15, 20);
         $this->assertSame(true, $validator->validate(false)->hasErrors());
+        $validator->clear();
         
-        $idade->clearValidationErrors()->notEqual(10);
+        $idade->notEqual(10);
         $this->assertSame(false, $validator->validate(false)->hasErrors());
+        $validator->clear();
         
-        $idade->clearValidationErrors()->notEqual(15);
+        $idade->notEqual(15);
         $this->assertSame(true, $validator->validate(false)->hasErrors());
+        $validator->clear();
         
-        $idade->clearValidationErrors()->notIn(10, 20, 30);
+        $idade->notIn(10, 20, 30);
         $this->assertSame(false, $validator->validate(false)->hasErrors());
+        $validator->clear();
         
-        $idade->clearValidationErrors()->notIn(10, 15, 30);
+        $idade->notIn(10, 15, 30);
         $this->assertSame(true, $validator->validate(false)->hasErrors());
+        $validator->clear();
     }
     
     public function testChainMethods()
     {
         $validator = $this->mock();
         
-        $idade = $validator->addInteger('idade', 'A idade', 15)
+        $idade = $validator->newInteger('idade', 'A idade', 15)
                 ->between(10, 25)
                 ->odd()
                 ->in(10, 15, 30)
@@ -136,45 +171,49 @@ final class IntValidatorTest extends TestCase
                 ->notEqual(20);
         
         $this->assertSame(false, $validator->validate(false)->hasErrors());
+        $validator->clear();
         
-        $idade->clearValidationErrors()
-                ->between(10, 25)
+        $idade->between(10, 25)
                 ->even()
                 ->in(10, 15, 30)
                 ->negative()
                 ->notEqual(20);
         
         $this->assertSame(true, $validator->validate(false)->hasErrors());
+        $validator->clear();
     }
     
     public function testNullable()
     {
         $validator = $this->mock();
         
-        $idade = $validator->addInteger('idade', 'A idade', null);
+        $idade = $validator->newInteger('idade', 'A idade', null);
         
         $idade->required();
         $this->assertSame(true, $validator->validate(false)->hasErrors());
+        $validator->clear();
         
-        $idade->clearValidationErrors()->required(false);
+        $idade->required(false);
         $this->assertSame(false, $validator->validate(false)->hasErrors());
+        $validator->clear();
     }
     
     public function testNullableChain()
     {
         $validator = $this->mock();
         
-        $idade = $validator->addInteger('idade', 'A idade', null);
+        $idade = $validator->newInteger('idade', 'A idade', null);
         
         $idade->required()
                 ->min(10);
         
         $this->assertSame(true, $validator->validate(false)->hasErrors());
+        $validator->clear();
         
-        $idade->clearValidationErrors()
-                ->required(false)
+        $idade->required(false)
                 ->min(10);
         
         $this->assertSame(false, $validator->validate(false)->hasErrors());
+        $validator->clear();
     }
 }

@@ -76,6 +76,15 @@ class StringRule extends BaseRule
     // Quando não é um CEP válido (formato brasileiro)
     const CEP_ERROR = 20025;
     
+    // Quando a string não conter ao menos 1 número
+    const AT_LEAST_ONE_NUMBER_ERROR = 20026;
+    
+    // Quando a string não conter ao menos 1 letra maiuscula
+    const AT_LEAST_ONE_UPPERCASE_ERROR = 20027;
+    
+    // Quando a string não conter ao menos 1 letra minuscula
+    const AT_LEAST_ONE_LOWERCASE_ERROR = 20028;
+    
     /**
      * Valida se a string é um CEP
      * @return $this;
@@ -480,6 +489,46 @@ class StringRule extends BaseRule
                 "pattern" => $regex,
             ]));
         }
+    }
+    
+    
+    /**
+     * Verifica se contém ao menos 1 número
+     * @return $this
+     */
+    public function atLeastOneNumber() : StringRule
+    {
+        if ($this->nullableCheck() && (!preg_match('/[0-9]/', $this->value))) 
+        {
+            $this->raiseError(self::AT_LEAST_ONE_NUMBER_ERROR, $this->context);
+        }
+        return $this;
+    }
+    
+    /**
+     * Verifica se contém ao menos 1 letra maiuscula
+     * @return $this
+     */
+    public function atLeastOneUppercase() : StringRule
+    {
+        if ($this->nullableCheck() && (!preg_match('/[A-Z]/', $this->value))) 
+        {
+            $this->raiseError(self::AT_LEAST_ONE_UPPERCASE_ERROR, $this->context);
+        }
+        return $this;
+    }
+    
+    /**
+     * Verifica se contém ao menos 1 letra minuscula
+     * @return $this
+     */
+    public function atLeastOneLowercase() : StringRule
+    {
+        if ($this->nullableCheck() && (!preg_match('/[a-z]/', $this->value))) 
+        {
+            $this->raiseError(self::AT_LEAST_ONE_LOWERCASE_ERROR, $this->context);
+        }
+        return $this;
     }
     
     /**
