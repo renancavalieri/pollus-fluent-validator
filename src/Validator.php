@@ -29,16 +29,7 @@ class Validator
      * @var ErrorCollection
      */
     protected $collection;
-    
-    /**
-     * Contém os campos e as regras de validação
-     * 
-     * input_name => regra de validação
-     * 
-     * @var array
-     */
-    protected $inputs;
- 
+     
     /**
      * @param TranslatorInterface $translator
      */
@@ -128,8 +119,7 @@ class Validator
      */
     public function clear() : Validator
     {
-        $this->collection = new ErrorCollection();
-        $this->inputs = [];
+        $this->collection->clear();
         return $this;
     }
 }

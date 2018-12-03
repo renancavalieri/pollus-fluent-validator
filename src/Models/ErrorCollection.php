@@ -19,6 +19,29 @@ class ErrorCollection
     protected $errors;
     
     /**
+     * @var int
+     */
+    protected $mode;
+
+    /**
+     * Loga somente o ultimo erro de validação
+     */
+    const MODE_LAST_ERROR = 0;
+    
+    /**
+     * Loga somente o primeiro erro de validação
+     */
+    const MODE_FIRST_ERROR = 1;
+    
+    /**
+     * @param int $mode
+     */
+    public function __construct(int $mode = 1)
+    {
+        $this->mode = $mode;
+    }
+    
+    /**
      * Adiciona um novo erro na coleção
      * 
      * @param string $input
@@ -26,7 +49,14 @@ class ErrorCollection
      */
     public function add(string $input, Error $error) : void
     {
-        $this->errors[$input] = $error;
+        if ($this->mode === self::MODE_FIRST_ERROR && !isset($this->errors[$input]))
+        {
+            $this->errors[$input] = $error;
+        }
+        else if (self::MODE_LAST_ERROR)
+        {
+            $this->errors[$input] = $error;
+        }
     }
     
     /**
@@ -47,5 +77,14 @@ class ErrorCollection
     public function getErrors() : array
     {
         return $this->errors;
+    }
+    
+    /**
+     * @return bool
+     */
+    public function clear() : bool
+    {
+        $this->errors = [];
+        return true;
     }
 }
