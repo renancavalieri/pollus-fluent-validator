@@ -30,27 +30,27 @@ final class StringValidatorTest extends TestCase
         $this->assertSame(true, $validator->validate(false)->hasErrors());
         $validator->clear();
         
-        $nome = $validator->newString('nome', "O nome", 'Fernando da Silva Pessoa')->lenghtBetween(5, 25);
+        $nome = $validator->newString('nome', "O nome", 'Fernando da Silva Pessoa')->lengthBetween(5, 25);
         $this->assertSame(false, $validator->validate(false)->hasErrors());
         $validator->clear();
         
-        $nome->lenghtBetween(25, 40);
+        $nome->lengthBetween(25, 40);
         $this->assertSame(true, $validator->validate(false)->hasErrors());
         $validator->clear();
         
-        $nome->minLenght(10);
+        $nome->minLength(10);
         $this->assertSame(false, $validator->validate(false)->hasErrors());
         $validator->clear();
         
-        $nome->minLenght(30);
+        $nome->minLength(30);
         $this->assertSame(true, $validator->validate(false)->hasErrors());
         $validator->clear();
         
-        $nome->maxLenght(30);
+        $nome->maxLength(30);
         $this->assertSame(false, $validator->validate(false)->hasErrors());
         $validator->clear();
         
-        $nome->maxLenght(10);
+        $nome->maxLength(10);
         $this->assertSame(true, $validator->validate(false)->hasErrors());
         $validator->clear();
         

@@ -104,7 +104,7 @@ class StringRule extends BaseRule
      * @param int $max
      * @return $this
      */
-    public function lenghtBetween(int $min, int $max) : StringRule
+    public function lengthBetween(int $min, int $max) : StringRule
     {
         if ($this->nullableCheck() && (strlen($this->value) >= $min && strlen($this->value) <= $max) === false)
         {
@@ -217,7 +217,7 @@ class StringRule extends BaseRule
      * @param int $min
      * @return $this
      */
-    public function minLenght(int $min) : StringRule
+    public function minLength(int $min) : StringRule
     {
         if ($this->nullableCheck() && (strlen($this->value) >= $min) === false)
         {
@@ -234,7 +234,7 @@ class StringRule extends BaseRule
      * @param int $max
      * @return $this
      */
-    public function maxLenght(int $max) : StringRule
+    public function maxLength(int $max) : StringRule
     {
         if ($this->nullableCheck() && (strlen($this->value) <= $max) === false)
         {
