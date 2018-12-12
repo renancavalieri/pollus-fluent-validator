@@ -14,6 +14,7 @@ use Pollus\Validator\Models\ErrorCollection;
 use Pollus\Validator\Rules\IntegerRule;
 use Pollus\Validator\Exceptions\ValidationException;
 use Pollus\Validator\Rules\StringRule;
+use Pollus\Validator\Rules\FloatRule;
 
 /**
  * Classe de validação fluente
@@ -57,6 +58,18 @@ class Validator
     public function newString(string $input_name, string $field, ?string $value) : StringRule
     {
         return new StringRule($input_name, $field, $value, $this);
+    }
+    
+    
+    /**
+     * @param string $input_name
+     * @param string $field
+     * @param string|null $value
+     * @return FloatRule
+     */
+    public function newFloat(string $input_name, string $field, ?float $value) : FloatRule
+    {
+        return new FloatRule($input_name, $field, $value, $this);
     }
     
     /**
